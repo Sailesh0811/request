@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>  	
+	<title>Event || Re:quest</title>
+	
+	
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+	<link rel="stylesheet" type="text/css" href="../materialize/css/materialize.css">
+	
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$(".button-collapse").sideNav();
+			$('.modal').modal();
+					
+		});
+	</script>
+	<style type="text/css">
+		.nav-wrapper{
+			background-color: #42A5F5;
+		}
+		body{
+			background: #e9f0f5;
+		}
+		.toast{
+			width: 50%;
+			height:5%;
+			font-family: 'Roboto', sans-serif;
+			color: #fff;
+			background: #4A148C;
+			text-align: center;			
+			position: fixed;
+			top:80%;
+			left: 2%;s
+			right: 0;
+			bottom: 4%;
+			z-index:9999;
+		}
+    .toast1{
+      width: 50%;
+      height:9%;
+      font-size: 105%;
+      color: #fff;
+      background: #ffb74d;
+      text-align: center;     
+      position: fixed;
+
+      top:10%;
+      left: 2%;s
+      right: 0;
+      bottom: 4%;
+      z-index:9999;
+    }
+		.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+.bounce-leave-active {
+  animation: bounce-out .5s;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes bounce-out {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+	.btn-large{
+		background-color: #e57373;
+	}
+	.btn-large:hover{
+		background-color: #b71c1c;
+	}
+	#clue_btns{
+		
+	}	
+
+	.clue{
+		margin-top:-2%;
+    margin-left: 2%;
+	}
+  .clues{
+    margin-top: 5%;
+  }
+  .clue1{
+    margin-top: 2%;
+  }
+	#scene0,#scene1,#scene3{
+		width:100%;
+    height:70%;
+    background: #ffffff;
+    color: #6d4c41;
+    font-size: 18px;
+    }
+    .scene2{
+      width:100%;
+    height:70%;   
+
+    color: #6d4c41;
+    }
+    #army{
+      width:150px;
+      height:50px;
+      margin-right: 2%;
+    }
+    #dragon{
+      width:150px;
+      height:50px;
+      margin-right: 2%;
+    }
+    .life{
+      background: #fdd835;
+      margin-top: 0.5%;
+      margin-left: 2%;
+    }
+    .life:hover{
+      background: #f9a825;
+      margin-top: 0.5%;
+      margin-left: 2%;
+    }
+    input[type=text]:disabled{
+      color: black;
+    }
+    .hides{
+      color:white;
+      font-size: 18px;
+    }
+    .red{
+      background: red;
+      width:100%;
+    height:100%;
+    background: red;
+    color: white;
+    }
+    .clue2{
+      margin-top: 2%;
+    }
+    #l{
+      margin-top: 5%;
+    }
+		</style>
+  </head>
+<body>
+<nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo center">Re:Quest</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#modalrules">Rules</a></li>
+        <li><a target="_blank" href="../php/leader.php">Leaderboard</a></li>
+        </ul>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>      
+    </div>
+  </nav>
+<div class="row" id="banner">
+
+<a class="waves-effect waves-light btn-large life" v-if="life==='0'" href="#modallife"  >Lifeline 1</a>  
+<a class="waves-effect waves-light btn-large life" v-if="life==='1'" href="#modallife">Lifeline 2</a>  
+<!-- <a class="waves-effect waves-light btn-flat disabled life" v-if="life==='2'">Life </a>   -->
+<div class="card small right" id="dragon" v-bind:title="dr">
+    <img src="../img/dragon.png" style="height: 48px;width:48px">{{dragon}}
+  </div>
+  <div class="card small right" id="army" v-bind:title="ar">
+    <img src="../img/army.png" style="height: 48px;width:48px">{{army}}
+  </div>
+</div>
+
+<div id="section" class="section" v-if="sh">
+    <div id="l0" v-if="level==='Z'">
+      <div class="row" style="height:400px">
+      <div class="container z-depth-2" id="scene0" >
+              <h4 class="center">Scene 1</h4>
+              <p class="container">The princess is confident that if she can hatch her dragons, she can rally her troops to retake her kingdom.
+<br>Start the quest by hatching her eggs!!</p>
+              <div class="container">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="sans0" type="text" class="validate">
+                    <label for="sans0">Answer</label>
+                </div> 
+                <a class="waves-effect waves-light btn-large clue1" v-on:click="checkscene0">Hatch</a>      
+              </div>                 
+              </div>
+              
+      </div>
+    </div>
+    <div class="container" id="clue_btns">
+      <a class="waves-effect waves-light btn-large clue" id="c0" href="#modal0">Clue 1</a>
+    </div>
+    </div>
+		<div id="l1" v-if="level==='A'">
+		<div class="row" style="height:400px">
+			<div class="container z-depth-2" id="scene1" >
+				      <h4 class="center">Scene 2</h4>
+              <p class="container">She gets informed that there is a witch residing in the nearby Keep.And it is said that she possesses many great powers, her alliance can be of great advantage to us.But, the keep is being guarded by a magical door which requires a passphrase to open it.
+<br>Find the passphrase..</p>
+              
+              <div class="row">
+                <div class="input-field col s6">
+                  <input placeholder="" id="sans1" type="text" class="validate">
+                    <label for="sans1"></label>
+                
+                <a class="waves-effect waves-light btn-large clue1" v-on:click="checkscene1">Open</a>   
+                  
+              </div>                 
+              </div>
+              
+			</div>
+		</div>
+		<div class="container" id="clue_btns">
+			<a class="waves-effect waves-light btn-large clue" id="c1" href="#modal1" v-if="show1">Clue 1</a>
+			<a class="waves-effect waves-light btn-large clue" id="c2" href="#modal2" v-if="show2">Clue 2</a>
+			<a class="waves-effect waves-light btn-large clue" id="c3" href="#modal3" v-if="show3">Clue 3</a>
+			<a class="waves-effect waves-light btn-large clue" id="c4" href="#modal4" v-if="show4">Clue 4</a>
+			<a class="waves-effect waves-light btn-large clue" id="c5" href="#modal5" v-if="show5">Clue 5</a>
+			<a class="waves-effect waves-light btn-large clue" id="c6" href="#modal6" v-if="show6">Clue 6</a>
+			</div>
+		</div>
+		<div id="l2" v-else-if="level=='B'"><div class="row" style="height:400px">
+      <div class="container z-depth-2 scene2" id="scene2" style="background-color:#ffffff"  >
+              <h4 class="center">Scene 3</h4>
+              <p class="container">The princess slowly goes inside the keep.After hearing the footsteps the witch locked herself inside a room and said "Find my ruby necklace, it is somewhere in this 'ROOM'".<br>Find the witch's ruby necklace..</p>
+              <p class="hides">The answer is theredwoman</p>
+              <div class="container">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="sans2" type="text" class="validate">
+                    <label for="sans2">Answer</label>
+                </div> 
+                <a class="waves-effect waves-light btn-large clue1" v-on:click="checkscene2">Give</a>      
+              </div>                 
+              </div>
+              
+      </div>
+    </div>
+    <div class="container" id="clue_btns1">
+      <a class="waves-effect waves-light btn-large clue" id="c21" href="#modal21">Clue 1</a>
+      
+      </div>
+    </div>
+
+		<div id="l3" v-else-if="level=='C'">
+      <div class="container z-depth-2 " id="scene3">
+              <h4 class="center">Scene 4</h4>
+              <p class="container">The witch comes out of the room, hears what the princess has to say and agrees to help her by casting a spell, for which she needs ingredients.However, the witch wants to test the princess' worth so asks her to find the ingredients, using her crystal ball.<br>Find the ingredients to cast the spell..</p>
+             
+              <div class="container">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="sans3" type="text" class="validate">
+                    <label for="sans3">Answer</label>
+                </div> 
+                <a class="waves-effect waves-light btn-large clue1" v-on:click="checkscene3">Give</a>      
+              </div>                 
+              </div>
+              
+      </div>
+    
+    <div class="container" id="clue_btns">
+      <a class="waves-effect waves-light btn-large clue" id="l" href="#modal22">Clue 1</a>
+      
+      </div>
+    
+    </div>
+		<div id="l4" v-else-if="level=='D'"><div class="container z-depth-2 " id="scene3">
+              <h4 class="center">Scene 5</h4>
+              <p class="container">The princess has amassed a sizable army.Now, she must sail across the ocean that keeps her reaching her kingdom.She knows a nearby kingdom known for its naval strength and marches there to meet their queen.The queen said if she can solve the problem faced by their kingdom, she will provide ships and troops for the princess' cause.<br>Solve the queen's problem..</p>
+             
+              <div class="container">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="sans4" type="text" class="validate">
+                    <label for="sans4">Answer</label>
+                </div> 
+                <a class="waves-effect waves-light btn-large clue1" v-on:click="checkscene4">Resolve</a>      
+              </div>                 
+              </div>
+              
+      </div>
+    
+    <div class="container" id="clue_btns">
+      <a class="waves-effect waves-light btn-large clues" id="c22" href="#modal55">Clue 1</a>
+      
+      </div>
+ </div>
+		<div id="l5" v-else-if="level=='E'">
+    <div class="container z-depth-2 " id="scene3">
+    <h4 class="center">Scene 6</h4>
+              <p class="container">The princess reaches the shores of her kingdom and lays siege.The battle begins, time is of the essence here your troops must fight on with no one save them.<br>In order to retake her kingdom, she must breach the city walls and kill the traitorous commander.<br>Find a way to breach the walls..</p>
+             
+              <div class="container">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="sans5" type="text" class="validate">
+                    <label for="sans5">Answer</label>
+                </div> 
+                <a class="waves-effect waves-light btn-large clue1" v-on:click="checkscene5">Breach</a>      
+              </div>                 
+              </div>
+              
+      </div>
+    
+    <div class="container" id="clue_btns">
+      <a class="waves-effect waves-light btn-large clues" id="c22" href="#modal66">Clue 1</a>
+      
+      </div>  
+    </div>  
+		
+    <div id="l" v-else-if="level=='F'">
+    <div class="container z-depth-2 " id="scene3">
+    <h4 class="center">Congrats!!!</h4>
+              <p class="container"> You helped the princess to reclaim her 'THRONE'...</p>            
+             
+              
+      </div>
+    
+    
+    </div>  
+
+
+
+</div>
+<div id="modals">
+<div id="modalrules" class="modal">
+    <div class="modal-content">
+      <h4>Rules</h4>
+      <p>1.The event will be for a total time of 2 1/2 hrs<br>
+<br>
+2.Read the description given in every scene carefully and use the clues given to solve a level.<br><br>
+
+3.Always enter your answer in lower case and without any spaces in between.<br><br>
+
+4.Use of compilers is allowed.<br><br>
+
+5.There will be two lifelines available which can be used to skip any level, but you will be penalized for using a lifeline.So be carefull!!<br><br>
+
+6.You will inspire and make people join your army as you solve the obstacles, and the one with the most number of troops at the end will be declared winner.<br><br>
+7.The last round (Scene 6) will be a timed event with no lifelines.<br><br>
+
+8.DO NOT Refresh your browsers, all of your progress will be lost if you do so.<br><br>
+
+9.Results of all the level are not subject to discussion and in case of discrepancies, the organizer’s decision will be final.<br><br></p>
+      
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  </div>
+<div id="modallife" class="modal">
+    <div class="modal-content">
+      <h4>Lifeline</h4>
+      <p>{{lifelinedesc}}</p>
+      <a class="waves-effect waves-light btn-large clue2" v-on:click="uselife" >Use</a>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  </div>
+<div id="modal0" class="modal">
+    <div class="modal-content">
+      <h4>Clue </h4>
+      <p>drogo ==> sphpe</p>
+      <p>? ==> sbdbszte</p>
+      
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  </div>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Clue 1</h4>
+      <p>There are six persons N, P, Q, R , S and T. Q is the sister of T. P is
+          the brother of S's husband. R is the father of N and grandfather of T.
+          There are two fathers, three brothers and a mother in the group.
+          Who is the     mother?</p>
+      <div class="row">
+      <div class="input-field col s6">
+          <input id="cans1" type="text" class="validate">
+          <label for="cans1">Answer</label>
+        </div>
+        <a class="waves-effect waves-light btn-large clue2" id="c1" v-on:click="checkclue('one')" >Check</a>
+        </div>        
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <h4>Clue 2</h4>
+      <p>String t=new String("Hello"),q=new String("Hello");<br>
+    char c=t==q?'f':'t';<br>
+    System.out.println(c);</p>
+      <div class="row">
+      <div class="input-field col s6">
+          <input id="cans2" type="text" class="validate">
+          <label for="cans2">Answer</label>
+        </div>
+        <a class="waves-effect waves-light btn-large clue2" id="c1" v-on:click="checkclue('two')" >Check</a>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  <div id="modal3" class="modal">
+    <div class="modal-content">
+      <h4>Clue 3</h4>
+      <p>int a=192,b=-128;<br>  
+    a=a>>>1;<br>
+    b=b>>7;<br>
+    b=b+2;<br>
+    a=a^b;<br>
+    System.out.println((char)a);</p>
+      <div class="row">
+      <div class="input-field col s6">
+          <input id="cans3" type="text" class="validate">
+          <label for="cans3">Answer</label>
+        </div>
+        <a class="waves-effect waves-light btn-large clue2" id="c1" v-on:click="checkclue('three')" >Check</a>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  <div id="modal4" class="modal">
+    <div class="modal-content">
+      <h4>Clue 4</h4>
+      <p>A person walks 100 meters due East and takes a sharp turn towards the North-West direction and moves 160<span style="white-space: nowrap; font-size:larger">
+&radic;<span style="text-decoration:overline;">&nbsp;2&nbsp;</span>
+</span> meters again takes a turn and moves 70<span style="white-space: nowrap; font-size:larger">
+&radic;<span style="text-decoration:overline;">&nbsp;2&nbsp;</span>
+</span> meters due South-West.Finally, moves 130 meters to the East. Find the direction of displacement of that person?</p>
+      <div class="row">
+      <div class="input-field col s6">
+          <input id="cans4" type="text" class="validate">
+          <label for="cans4">Answer</label>
+        </div>
+        <a class="waves-effect waves-light btn-large clue2" id="c1" v-on:click="checkclue('four')" >Check</a>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  <div id="modal5" class="modal">
+    <div class="modal-content">
+      <h4>Clue 5</h4>
+      <p><img src="../img/eqn.png"></p>
+      <div class="row">
+      <div class="input-field col s6">
+          <input id="cans5" type="text" class="validate">
+          <label for="cans5">Answer</label>
+        </div>
+          <a class="waves-effect waves-light btn-large clue2" id="c1" v-on:click="checkclue('five')">Check</a>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  <div id="modal6" class="modal">
+    <div class="modal-content">
+      <h4>Clue 6</h4>
+      <p>melisandre ==> nvorhzmwiv<br>
+      gsv zmhdvi rh h ==> ??</p>
+      <div class="row">
+      <div class="input-field col s6">
+          <input id="cans6" type="text" class="validate">
+          <label for="cans6">Answer</label>
+        </div>
+        <a class="waves-effect waves-light btn-large clue2" id="c1" v-on:click="checkclue('six')">Check</a>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  <div id="modal21" class="modal">
+    <div class="modal-content">
+      <h4>Clue </h4>
+      <p>Answer is in this room</p>
+      
+        
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  <div id="modal22" class="modal">
+    <div class="modal-content">
+      <h4>Clue </h4>
+      <p><img style="height: 500px;width: 800px;" src="../img/d.jpg"></p>
+      <div class="row">
+      
+        
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+</div>
+<div id="modal55" class="modal">
+    <div class="modal-content">
+      <h4>Clue</h4>
+      <p>1, Sample Input: str = "dhrogigang"  n = 2<br>
+   Sample Output: "drggnhoiag"<br><br>
+
+2, Sample Input: str = "googleintern"  n = 3<br>
+   Sample Output: "ggieolnroetn"<br><br>
+   Find the output for the input in the txt file,
+</p><br>
+      <div class="row">
+      <a class="waves-effect waves-light btn-large clue" id="c1" target="_blank" href="../php/md5.php">Download</a>
+        
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+</div>
+<div id="modal66" class="modal">
+    <div class="modal-content">
+      <h4>Clue</h4>
+      <p><img src="../img/pass.jpg"></p>
+      <div class="row">
+      <div class="input-field col s6">
+          <input id="cans66" type="text" class="validate">
+          <label for="cans66">Answer</label>
+        </div>
+        <a class="waves-effect waves-light btn-large clue2" v-on:click='checkhack'>Check</a>
+        </div>
+      
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+</div>
+</div>
+<div id="toast"> 
+		 <transition name="bounce">
+		   <div v-if="show" class="toast">{{toast}}</div>
+		  </transition>
+</div>
+<div id="toast1"> 
+     <transition name="bounce">
+       <div v-if="show" class="toast1"><b>{{toast}}</b></div>
+      </transition>
+</div>
+<script type="text/javascript" src="../js/event.js"></script>
+</body>
+</html>
